@@ -1,0 +1,17 @@
+.container-md{
+	margin-top: 50px;
+	padding: 30px;
+	border-radius: .75rem;
+	background-color: #E5E5E5;
+}
+
+.circulo {
+     margin-top: 50px;
+     width: 100px;
+     height: 100px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     border-bottom: 50px solid #88BBD6;
+     background: #E5E5E5;
+}

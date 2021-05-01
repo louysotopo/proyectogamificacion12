@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Nivel Intermedio</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+	<link href="{{ url_for('static',filename='css/vivian/style.css') }}" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="{{ url_for('static',filename='js/vivian/codigo.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/vivian/jquery-3.6.0.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-10">
+				<div class="container-md">
+					<h3> Seleccione las Palabras Clave </h3>
+				</div>
+			</div>
+			<div class="col-2">
+				<div class="circulo">
+					<h2 style="text-align: center;padding: 30px"> 90 </h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-9">
+					<div class="container-md" style="border: 2px solid #E9E9E9 ; background: #FFFFFF ">
+						<p>
+							El uso mediado de la tecnología fomenta el aprendizaje desde la infancia y representa un potencial recurso para la educación inclusiva. Al mismo tiempo, la creciente exposición a contenidos digitales interactivos, a menudo conectados a la red, conlleva una serie de riesgos para los niños. A las estrategias actualmente empleadas para protegerlos, que se limitan a reducir su exposición a contenidos perjudiciales, parece subyacer una definición de protección inadecuada. Esta investigación propone que se amplíe esta definición. A través de una observación sistemática de 200 apps para menores de ocho años en el ámbito catalán y un análisis de componentes principales, se propone una definición multidimensional de protección que no se limita a detallar los riesgos potenciales, sino que también considera aspectos relacionados con el potencial educativo e inclusivo de los recursos digitales. Se sugieren cinco factores a considerar para seleccionar estos recursos y contribuir a la competencia digital de docentes y alumnos. El primer factor concierne al uso de mecanismos de protección y la existencia de interferencias externas; el segundo factor indica la presencia de herramientas de adaptación; la exposición a estereotipos corresponde al tercer factor y los últimos dos consideran los conocimientos previos requeridos y el componente verbal de las apps. Finalmente se discute el alcance de la definición propuesta y sus limitaciones para guiar análisis futuros.
+
+						</p>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="container-md" style="border: 2px solid #E9E9E9 ; background: #FFFFFF ">
+						<form class="row g-3 needs-validation" action="" id="form">
+							<label class="form-label">Palabras Clave </label>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc01" id="pc01" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc02" id="pc02" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc03" id="pc03" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc04" id="pc04" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc05" id="pc05" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc06" id="pc06" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc07" id="pc07" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc08" id="pc08" required>
+							</div>
+							<div class="mb">
+							    <button class="btn btn-primary" type="button" onclick="getData()">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
