@@ -29,17 +29,21 @@
 				<div class="col-9">
 					<div class="container-md" style="border: 2px solid #E9E9E9 ; background: #FFFFFF ">
 						<p>
-							Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque in consequuntur corporis placeat, quisquam maxime nostrum tempore, culpa qui est dolor quos aspernatur tempora! Quos doloremque tempora vitae sed accusamus.
+							{{ titulo }}
 						</p>
 					</div>
+                    
                     <div class="mb">
-                        <button class="btn btn-secondary" type="button" > Cambiar </button>
+                        <a  href="{{ url_for('basico') }}"  > 
+                            <button class="btn btn-secondary" type="button" > Cambiar </button> 
+                        </a>
+                        
                         
                     </div>
 				</div>
 				<div class="col-3">
 					<div class="container-md" style="border: 2px solid #E9E9E9 ; background: #FFFFFF ">
-						<form class="row g-3 needs-validation" action="" id="form">
+						<form class="row g-3 needs-validation" action="{{ url_for('resultado') }}" method="POST" id="form">
 							<label class="form-label">Palabras Clave </label>
 							<div class="col-md-6">
     							<input type="text" class="form-control" name="pc01" id="pc01" required>
@@ -66,7 +70,7 @@
     							<input type="text" class="form-control" name="pc08" id="pc08" required>
 							</div>
 							<div class="mb">
-							    <button class="btn btn-primary" type="button" onclick="getData()">Enviar</button>
+							    <button class="btn btn-primary" type="submit">Enviar</button>
 							</div>
 						</form>
 					</div>

@@ -23,9 +23,10 @@
               <h5 class="card-title">Palabras clave detectadas por la Inteligencia artificial</h5>
               
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
+                {% for value in list1 %}
+                <li class="list-group-item">{{ value }}</li>
+                {% endfor %} 
+
               </ul>
             </div>
           </div>
@@ -36,9 +37,9 @@
               <h5 class="card-title">Palabras clave que seleccionaste correctamente</h5>
               
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
+                {% for value in list2 %}
+                <li class="list-group-item">{{ value }}</li>
+                {% endfor %} 
               </ul>
             </div>
           </div>
@@ -49,9 +50,9 @@
               <h5 class="card-title">Palabras clave que seleccionaste incorrectamente</h5>
               
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
+                {% for value in list3 %}
+                <li class="list-group-item">{{ value }}</li>
+                {% endfor %} 
               </ul>
             </div>
           </div>      
@@ -62,15 +63,16 @@
               <h5 class="card-title">Posibles palabras clave que fueron seleccionadas por el estudiante</h5>
               
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
+                {% for value in list4 %}
+                <li class="list-group-item">{{ value }}</li>
+                {% endfor %} 
               </ul>
             </div>
           </div>      
         </div>
     </div>
-    <button type="button" class="btn btn-primary btn-lg" style="margin-top: 3%;">Siguiente</button>
+    <a href="{{ url_for('basico') }}" > <button type="button" class="btn btn-primary btn-lg" style="margin-top: 3%;">Siguiente</button> </a>
+    
     </div>
 
 
