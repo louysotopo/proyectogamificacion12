@@ -1,5 +1,5 @@
 from flask import Flask,render_template
-
+from mycode 
 
 app = Flask(__name__)
 
@@ -13,5 +13,10 @@ def index():
 def hoja1():
     return render_template('intermedio.html')
 
+
+@app.route('/resultado')
+def hoja1():
+    arr= ["qasdasd"]
+    return render_template('intermedio.html')
 if __name__ == '__main__':
     app.run(debug=True)
