@@ -1,22 +1,23 @@
 from flask import Flask,render_template
-from mycode 
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    titulo = "app gamificacion"
-    lista = ['footer','header','info','hola']
-    return render_template('index.html',titulo=titulo,lista=lista)
+    return render_template('inicio.html')
+
+@app.route('/basico')
+def basico():
+    return render_template('basico.html')
 
 @app.route('/intermedio')
-def hoja1():
+def intermedio():
     return render_template('intermedio.html')
-
 
 @app.route('/resultado')
-def hoja1():
+def resultado():
     arr= ["qasdasd"]
-    return render_template('intermedio.html')
+    return render_template('resultado.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

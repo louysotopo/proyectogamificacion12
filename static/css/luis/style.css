@@ -1,0 +1,12 @@
+html{
+    padding: 10%;
+}
+.center{
+    text-align: center;
+}
+
+.padre{
+    margin-top: 30%;
+    display: flex;
+   align-items: center;
+}
