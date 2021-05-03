@@ -1,5 +1,17 @@
+from gensim.summarization.summarizer import summarize
+from gensim.summarization import keywords
 import pandas as pd
 import random
+import nltk
+nltk.download('punkt')
+from nltk.corpus import stopwords
+# nltk.donwload('stopwords')
+nltk.download('stopwords')
+from nltk.tokenize import word_tokenize
+set(stopwords.words('spanish'))
+
+from nltk import word_tokenize
+from nltk.stem import SnowballStemmer
 
 #extrae datos
 def gettingData():
@@ -18,7 +30,154 @@ def gettingData():
     return _titles, _summary, _keywords, _full_article, len(_titles)
 
 
-def getTitle(value):
+def getTitle():
     _titles, _summary, _keywords, _full_article, _size = gettingData()
     value = random.randint(0, _size)
     return _titles[value], value
+
+
+# arrays con las palabras a comparar y devuelve un array 
+# con las palabras que se determinan igual
+def getMatching (arr_original, arr_prediccion):
+
+  stemmer = SnowballStemmer('spanish')
+
+  arr_matching = []
+  matching = False
+
+  for elem_orig in arr_original:
+    matching = False
+    for elem_pred in arr_prediccion:
+      if matching == True:
+        break
+      for word_orig in elem_orig.split():
+        word_orig = word_orig.lower()
+        word_orig = word_orig.replace("ñ","n").replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u")
+        
+        if matching == True:
+          break
+        for word_pred in elem_pred.split():
+          word_pred = word_pred.lower()
+          word_pred = word_pred.replace("ñ","n").replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u")
+          if stemmer.stem(word_pred) == stemmer.stem(word_orig):
+            arr_matching.append([elem_orig, elem_pred])
+            matching = True
+
+  return arr_matching
+
+
+#setting stop_words
+def setting_stop_words():
+
+  stop_words = set(stopwords.words('spanish'))  
+
+  #Añadir stopwords
+  extra_stop_words = ['https','doi']
+  for item in extra_stop_words:
+    stop_words.add(item)
+
+  return stop_words
+
+#removing stop_words
+def removing_stop_words(_text, _separe_by):
+    #setting stop_words
+  stop_words = setting_stop_words()
+  word_tokens = word_tokenize(_text.lower())
+  filtered_sentence = [] 
+  
+  for w in word_tokens: 
+    if w not in stop_words:
+      w.replace(":"," ")
+      filtered_sentence.append(w)
+  
+  return _separe_by.join(filtered_sentence)   
+
+#clean array
+def clean_array(arr_key1):
+  
+  for i in range(len(arr_key1)):
+    arr_key1[i] = arr_key1[i].strip()
+ 
+  return arr_key1
+
+#random row
+def get_row(value):
+  #extrae datos
+  _titles, _summary, _keywords, _full_article, _size = gettingData()
+  
+  return _titles[value], _summary[value], _keywords[value], _full_article[value]
+ 
+def get_random_row():
+  
+  #extrae datos
+  _titles, _summary, _keywords, _full_article, _size = gettingData()
+  
+  random_value = random.randint(0, _size)
+  
+  return _titles[random_value], _summary[random_value], _keywords[random_value], _full_article[random_value]
+
+
+def nivel_1_resultados(_titles, _summary, arr_usuario):
+
+  #removing stop_words summary
+  cleaned_summary = removing_stop_words(_summary, ", ")
+
+  #removing stop_words title
+  cleaned_title = removing_stop_words(_titles, " ")  
+
+  #limpiado en el resumen como palabras clave
+  _aux_keywords = cleaned_summary
+
+  #volver arrays   #volver array titulo
+  arr_key1 = " ".join(_titles.split()).split()
+  arr_key2 = " ".join(_aux_keywords.split()).split(",")
+  
+  #clean array
+  arr_key1 = clean_array(arr_key1) #original
+  arr_key2 = clean_array(arr_key2) #prediction
+  arr_key3 = clean_array(arr_usuario) #user
+
+  #v1
+  # matching_user_original = getMatching(arr_key3, arr_key1)
+  # matching_user_prediction = getMatching(arr_key3, arr_key2)
+  # matching_original_prediction = getMatching(arr_key1, arr_key2)
+
+  #v2
+  matching_user_original = getMatching(arr_key1, arr_key3)
+  matching_original_prediction = getMatching(arr_key1, arr_key2)
+  
+  aux_arr = []
+  for item in matching_original_prediction:
+    aux_arr.append(item[0].strip())
+  
+  matching_user_prediction = getMatching(aux_arr, arr_key3)
+
+
+  return matching_user_original, matching_user_prediction, matching_original_prediction
+
+def divideArrays(double_array):
+    arr_1 = []
+    arr_2 = []
+    for item in double_array:
+        arr_1.append(item[0])
+        arr_2.append(item[1])
+
+    return arr_1, arr_2
+
+def getDiference(arr1, arr2):
+
+    arr1 = clean_array(arr1) #original
+
+    for item in arr1:
+        for item2 in arr2:
+            if item == item2:
+                arr1.remove(item)
+                break
+    return arr1
+
+def equal_string(str1, str2):
+    str1 = str1.lower().strip().replace("ñ","n").replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u")
+    str2 = str2.lower().strip().replace("ñ","n").replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u")
+    if str1 == str2:
+        return True
+    return False
