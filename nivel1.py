@@ -29,11 +29,8 @@ def gettingData():
 
     return _titles, _summary, _keywords, _full_article, len(_titles)
 
-
-def getTitle():
-    _titles, _summary, _keywords, _full_article, _size = gettingData()
-    value = random.randint(0, _size)
-    return _titles[value], value
+def getRandom(limit):
+  return random.randint(0,limit) 
 
 
 # arrays con las palabras a comparar y devuelve un array 
@@ -100,22 +97,6 @@ def clean_array(arr_key1):
  
   return arr_key1
 
-#random row
-def get_row(value):
-  #extrae datos
-  _titles, _summary, _keywords, _full_article, _size = gettingData()
-  
-  return _titles[value], _summary[value], _keywords[value], _full_article[value]
- 
-def get_random_row():
-  
-  #extrae datos
-  _titles, _summary, _keywords, _full_article, _size = gettingData()
-  
-  random_value = random.randint(0, _size)
-  
-  return _titles[random_value], _summary[random_value], _keywords[random_value], _full_article[random_value]
-
 
 def nivel_1_resultados(_titles, _summary, arr_usuario):
 
@@ -167,12 +148,19 @@ def divideArrays(double_array):
 def getDiference(arr1, arr2):
 
     arr1 = clean_array(arr1) #original
+    arr2 = clean_array(arr2) 
+    
+    to_erase = []
 
     for item in arr1:
         for item2 in arr2:
             if item == item2:
-                arr1.remove(item)
+                to_erase.append(item)
                 break
+                
+    for item in to_erase:
+      arr1.remove(item)
+
     return arr1
 
 def equal_string(str1, str2):
