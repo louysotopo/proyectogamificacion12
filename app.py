@@ -55,4 +55,4 @@ def resultado():
     return render_template('resultado.html',list1 = list1,list2=list2,list3=list3,list4=list4)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
