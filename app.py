@@ -1,6 +1,6 @@
 from flask import Flask,render_template,request
 from nivel1 import getRandom, nivel_1_resultados, divideArrays, getDiference, gettingData
-from keywords_difficult_level import evaluar,comparativa_estudiante,buscarNombre
+#from keywords_difficult_level import evaluar,comparativa_estudiante,buscarNombre
 
 app = Flask(__name__)
 _titles, _summaries, _keywords, _full_articles, size = gettingData()
@@ -26,11 +26,11 @@ def intermedio():
 @app.route('/avanzado')
 def avanzado():
 
-    rand_number= getRandom(8)
-    nombre_pdf = buscarNombre(rand_number)    
-    print(nombre_pdf)
-
-    return render_template('avanzado.html',nombre=nombre_pdf, rand_number=rand_number)
+    #rand_number= getRandom(8)
+    #nombre_pdf = buscarNombre(rand_number)    
+    #print(nombre_pdf)
+    return render_template('avanzado.html')
+    #return render_template('avanzado.html',nombre=nombre_pdf, rand_number=rand_number)
 
 @app.route('/resultado', methods=["GET","POST"])
 def resultado():
@@ -79,13 +79,17 @@ def resultado2():
         rand_number = request.form["rand_number"]
    
     arr_usuario=[pc01,pc02,pc03,pc04,pc05,pc06,pc07,pc08]
-    diccionario_D = evaluar(rand_number)
-    res1,res2,res3 = comparativa_estudiante(diccionario_D,arr_usuario)   
+    #diccionario_D = evaluar(rand_number)
+    #res1,res2,res3 = comparativa_estudiante(diccionario_D,arr_usuario)   
 
-    list1 = res1
-    list2 = res2
-    list3 = res3
+    #list1 = res1
+    #list2 = res2
+    #list3 = res3
+    list1 = ["q","q"]
+    list2 = ["q","q"]
+    list3 = ["q","q"]
     list4 = ["q","q"]
+
 
     return render_template('resultado2.html',list1 = list1,list2=list2,list3=list3,list4=list4)
 

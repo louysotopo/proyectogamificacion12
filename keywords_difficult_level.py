@@ -21,10 +21,25 @@ from difflib import SequenceMatcher as SM
 nltk.download('averaged_perceptron_tagger')
 nltk.download('wordnet')
 
-def STOPWORDS():
+def gettingData():
+    _route = 'https://docs.google.com/spreadsheets/d/'
+    _sheet_id='1w6Lr3cO7rQ8G-D9DpIgIzf4DC28eDbtuy8c_y-zgyRU'
+    _sheet_name='DAR'
 
+    url=f'https://docs.google.com/spreadsheet/ccc?key={_sheet_id}&output=xlsx'
+    df = pd.read_excel(url,sheet_name=_sheet_name)
+
+    _titles = df.titulo
+    _summary = df.resumen_limpio
+    _keywords = df.palabras_clave
+    _full_article = df.articulo_completo_limpio
+
+    return _titles, _summary, _keywords, _full_article, len(_titles)
+
+
+
+def STOPWORDS():
     stop_words = set(stopwords.words("spanish"))
-    ##Creating a list of custom stopwords
     new_words2 = ['http', 'doi', 'org', 'comunicar', 'revista','cientifica', 'issn', 'www', 'revistacomunicarcom', 'com', 'páginas', 'aceptado' , 'publicado','journal']
     stop_words = stop_words.union(new_words2)
     stop_words=stop_words.union(set(stopwords.words("english")))

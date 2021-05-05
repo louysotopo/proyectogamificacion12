@@ -9,7 +9,6 @@ from nltk.corpus import stopwords
 nltk.download('stopwords')
 from nltk.tokenize import word_tokenize
 set(stopwords.words('spanish'))
-
 from nltk import word_tokenize
 from nltk.stem import SnowballStemmer
 
