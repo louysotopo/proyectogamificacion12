@@ -59,5 +59,25 @@ def resultado():
    
     return render_template('resultado.html',list1 = list1,list2=list2,list3=list3,list4=list4)
 
+@app.route('/resultado2', methods=["GET","POST"])
+def resultado2():
+    if request.method == "POST":
+        pc01 = request.form["pc01"]
+        pc02 = request.form["pc02"]
+        pc03 = request.form["pc03"]
+        pc04 = request.form["pc04"]
+        pc05 = request.form["pc05"]
+        pc06 = request.form["pc06"]
+        pc07 = request.form["pc07"]
+        pc08 = request.form["pc08"]
+
+       
+    arr_usuario=[pc01,pc02,pc03,pc04,pc05,pc06,pc07,pc08]
+    list1 = ["q","q"]
+    list2 = ["q","q"]
+    list3 = ["q","q"]
+    list4 = ["q","q"]
+    return render_template('resultado2.html',list1 = list1,list2=list2,list3=list3,list4=list4)
+
 if __name__ == '__main__':
     app.run()
