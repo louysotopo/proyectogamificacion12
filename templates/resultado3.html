@@ -17,6 +17,22 @@
     <div style="margin: 4%;">
 
       <div class="row row-cols-1 row-cols-md-4 g-4">
+
+
+        <div class="col">        
+          <div class="card" >
+            <div class="card-body">
+              <h5 class="card-title">Palabras clave que fueron seleccionadas por el autor</h5>
+              
+              <ul class="list-group list-group-flush">
+                {% for value in list4 %}
+                <li class="list-group-item">{{ value }}</li>
+                {% endfor %} 
+              </ul>
+            </div>
+          </div>      
+        </div>
+
         <div class="col">
           <div class="card" >
             <div class="card-body">
@@ -57,7 +73,7 @@
             </div>
           </div>      
         </div>
-        <!-- 
+        <!-- Do not display this image at the moment
 
         <div class="col">        
           <div class="card" >
@@ -74,7 +90,7 @@
         </div>
         -->
     </div>
-    <a href="{{ url_for('basico') }}" > <button type="button" class="btn btn-primary btn-lg" style="margin-top: 3%;">Siguiente</button> </a>
+    <a href="{{ url_for('intermedio') }}" > <button type="button" class="btn btn-primary btn-lg" style="margin-top: 3%;">Siguiente</button> </a>
     
     </div>
 

@@ -17,6 +17,91 @@
 		<div class="row">
 			<div class="col-10">
 				<div class="container-md">
+					<h3> Seleccione las Palabras Clave del siguiente resumen </h3>
+				</div>
+			</div>
+			<div class="col-2">
+				<div class="circulo">
+					<h2 style="text-align: center;padding: 30px"> 90 </h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-9">
+					<div class="container-md" style="border: 2px solid #E9E9E9 ; background: #FFFFFF ">
+						<p>
+							{{ resumen }}
+						</p>
+					</div>
+                    
+                    <div class="mb">
+                        <a  href="{{ url_for('intermedio') }}"  > 
+                            <button class="btn btn-secondary" type="button" > Cambiar </button> 
+                        </a>
+                        
+                        
+                    </div>
+				</div>
+				<div class="col-3">
+					<div class="container-md" style="border: 2px solid #E9E9E9 ; background: #FFFFFF ">
+						<form class="row g-3 needs-validation" action="{{ url_for('resultado3') }}" method="POST" id="form">
+							<label class="form-label">Palabras Clave </label>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc01" id="pc01" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc02" id="pc02" required>
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc03" id="pc03" >
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc04" id="pc04" >
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc05" id="pc05" >
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc06" id="pc06" >
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc07" id="pc07" >
+							</div>
+							<div class="col-md-6">
+    							<input type="text" class="form-control" name="pc08" id="pc08" >
+							</div>
+							<div class="mb">
+							    <button class="btn btn-primary" type="submit">Enviar</button>
+							</div>
+							<input type="hidden" id="rand_number" name="rand_number" value="{{rand_number}}">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<!--  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Nivel Intermedio</title>
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
+	<link href="{{ url_for('static',filename='css/vivian/style.css') }}" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="{{ url_for('static',filename='js/vivian/codigo.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/vivian/jquery-3.6.0.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
+
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-10">
+				<div class="container-md">
 					<h3> Seleccione las Palabras Clave </h3>
 				</div>
 			</div>
@@ -73,3 +158,5 @@
 	</div>
 </body>
 </html>
+
+-->

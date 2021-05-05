@@ -135,6 +135,37 @@ def nivel_1_resultados(_titles, _summary, arr_usuario):
 
   return matching_user_original, matching_user_prediction, matching_original_prediction
 
+def nivel_2_resultados(_keywords, _full_article, arr_usuario):
+  #setting stop_words
+  stop_words = setting_stop_words()
+
+  #removing stop_words summary
+  cleaned_article = removing_stop_words(_full_article, " ")
+  
+  #extración palabras clave
+  _aux_keywords = keywords(cleaned_article, lemmatize=True, words=20).replace('\n',', ')
+
+  #volver arrays   #volver array titulo
+  arr_key1 = " ".join(_keywords.split()).split(",")
+  arr_key2 = " ".join(_aux_keywords.split()).split(",")
+
+  #clean array
+  arr_key1 = clean_array(arr_key1) #original
+  arr_key2 = clean_array(arr_key2) #prediction
+  arr_key3 = clean_array(arr_usuario) #user
+
+  #v2
+  matching_user_original = getMatching(arr_key1, arr_key3)
+  matching_original_prediction = getMatching(arr_key1, arr_key2)
+  
+  aux_arr = []
+  for item in matching_original_prediction:
+    aux_arr.append(item[0].strip())
+  
+  matching_user_prediction = getMatching(aux_arr, arr_key3)
+
+  return matching_user_original, matching_user_prediction, matching_original_prediction
+
 def divideArrays(double_array):
     arr_1 = []
     arr_2 = []
