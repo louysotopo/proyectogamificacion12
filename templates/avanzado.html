@@ -28,7 +28,7 @@
 			<div class="row">
 				<div class="col-9">
           <div class="container-md">
-            <iframe src="{{ url_for('static',filename='utils/doc01.pdf')}}" style="height:200px;width:300px;"  ></iframe>
+			<iframe src="https://docs.google.com/viewer?srcid={{nombre}}&pid=explorer&efh=false&a=v&chrome=false&embedded=true" width="100%" height="680px"></iframe>
           </div>         
 					                    
           <div class="mb">
@@ -68,7 +68,7 @@
 							<div class="mb">
 							    <button class="btn btn-primary" type="submit">Enviar</button>
 							</div>
-							
+							<input type="hidden" id="rand_number" name="rand_number" value="{{rand_number}}">
 						</form>
 					</div>
 				</div>

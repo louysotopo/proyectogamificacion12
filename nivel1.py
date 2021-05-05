@@ -30,7 +30,7 @@ def gettingData():
     return _titles, _summary, _keywords, _full_article, len(_titles)
 
 def getRandom(limit):
-  return random.randint(0,limit) 
+  return random.randint(2,limit) 
 
 
 # arrays con las palabras a comparar y devuelve un array 
