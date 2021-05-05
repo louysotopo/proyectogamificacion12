@@ -10,6 +10,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.wordnet import WordNetLemmatizer
 from oauth2client.service_account import ServiceAccountCredentials
@@ -17,6 +18,8 @@ from os import path
 #from PIL import Image
 #from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from difflib import SequenceMatcher as SM
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
 
 def STOPWORDS():
 
