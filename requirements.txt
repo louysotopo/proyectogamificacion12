@@ -69,5 +69,5 @@ typer==0.3.2
 urllib3==1.26.4
 wasabi==0.8.2
 Werkzeug==1.0.1
-wordcloud @ wordcloud-1.8.1-cp39-cp39-win_amd64.whl
+wordcloud @ https://github.com/louysotopo/proyectogamificacion12/blob/main/wordcloud-1.8.1-cp39-cp39-win_amd64.whl
 xlrd==2.0.1
