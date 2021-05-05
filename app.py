@@ -1,6 +1,6 @@
 from flask import Flask,render_template,request
 from nivel1 import getRandom, nivel_1_resultados, divideArrays, getDiference, gettingData
-from keywords_difficult_level import evaluar,comparativa_estudiante,buscarNombre,nube
+from keywords_difficult_level import evaluar,comparativa_estudiante,buscarNombre
 
 app = Flask(__name__)
 _titles, _summaries, _keywords, _full_articles, size = gettingData()
