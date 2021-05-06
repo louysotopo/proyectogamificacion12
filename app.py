@@ -1,12 +1,50 @@
+import pyrebase
 from flask import Flask,render_template,request
 from nivel1 import getRandom, nivel_1_resultados, nivel_2_resultados, divideArrays, getDiference, gettingData
-#from keywords_difficult_level import evaluar,comparativa_estudiante,buscarNombre
+#from keywords_difficult_level import evaluar,comparativa_estudiante
+
+config = {
+    "apiKey": "AIzaSyCsFmrjvIHBODBf0Vsb0Rvfqn5mgY2I7Lw",
+    "authDomain": "gamip-e2a54.firebaseapp.com",
+    "projectId": "gamip-e2a54",
+    "storageBucket": "gamip-e2a54.appspot.com",
+    "messagingSenderId": "783180904629",
+    "appId": "1:783180904629:web:e747cd4ca127296f9b66fc",
+    "measurementId": "G-17NVEBGH3M",
+    "databaseURL":""
+}
+
+firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
 
 app = Flask(__name__)
-_titles, _summaries, _keywords, _full_articles, size = gettingData()
 
+_titles, _summaries, _keywords, _full_articles, size = gettingData()
 rand_number = getRandom(size)
-#rand_number_resultado2 = getRandom(9)
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/create_account', methods=['GET','POST'])
+def create_account():
+    if request.method == 'POST':
+        pwd0 = request.form['user_pwd0']
+        pwd1 = request.form['user_pwd1']
+        if pwd0 == pwd1 :
+            try: 
+                email = request.form['user_email']
+                password = request.form['user_pwd1']
+                new_user = auth.create_user_with_email_and_password(email,password)
+                auth.send_email_verification(new_user['idToken'])
+                existing_account = "Revise su correo para la confirmacion"
+                return render_template("create_account.html",message=existing_account)                
+            except:
+                existing_account = "Este correo ya esta registrado"
+                return render_template("create_account.html", message= existing_account)
+
+    return render_template('create_account.html')
+
 
 @app.route('/')
 def index():
@@ -28,11 +66,11 @@ def intermedio():
 @app.route('/avanzado')
 def avanzado():
 
-    #rand_number= getRandom(8)
-    #nombre_pdf = buscarNombre(rand_number)    
+    rand_number= getRandom(7)
+    #nombre_pdf = buscarNombre(rand_number,pdf_)    
     #print(nombre_pdf)
-    return render_template('avanzado.html')
-    #return render_template('avanzado.html',nombre=nombre_pdf, rand_number=rand_number)
+    #return render_template('avanzado.html')
+    return render_template('avanzado.html',rand_number=rand_number)
 
 @app.route('/resultado', methods=["GET","POST"])
 def resultado():
@@ -114,7 +152,7 @@ def resultado2():
         rand_number = request.form["rand_number"]
    
     arr_usuario=[pc01,pc02,pc03,pc04,pc05,pc06,pc07,pc08]
-    #diccionario_D = evaluar(rand_number)
+    #diccionario_D = evaluar(rand_number,_keywords, _full_articles)
     #res1,res2,res3 = comparativa_estudiante(diccionario_D,arr_usuario)   
 
     #list1 = res1

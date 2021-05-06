@@ -1,5 +1,5 @@
 import gspread
-import pandas 
+import pandas as pd, pandas
 import nltk
 import re
 import enchant
@@ -10,32 +10,13 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.wordnet import WordNetLemmatizer
-from oauth2client.service_account import ServiceAccountCredentials
-from os import path
 #from PIL import Image
 #from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from difflib import SequenceMatcher as SM
-nltk.download('averaged_perceptron_tagger')
-nltk.download('wordnet')
-
-def gettingData():
-    _route = 'https://docs.google.com/spreadsheets/d/'
-    _sheet_id='1w6Lr3cO7rQ8G-D9DpIgIzf4DC28eDbtuy8c_y-zgyRU'
-    _sheet_name='DAR'
-
-    url=f'https://docs.google.com/spreadsheet/ccc?key={_sheet_id}&output=xlsx'
-    df = pd.read_excel(url,sheet_name=_sheet_name)
-
-    _titles = df.titulo
-    _summary = df.resumen_limpio
-    _keywords = df.palabras_clave
-    _full_article = df.articulo_completo_limpio
-
-    return _titles, _summary, _keywords, _full_article, len(_titles)
-
+#nltk.download('averaged_perceptron_tagger')
+#nltk.download('wordnet')
 
 
 def STOPWORDS():
@@ -46,18 +27,13 @@ def STOPWORDS():
     return stop_words
 
 def preprocesamiento(valor,stop_words):
-    d = enchant.Dict("en_US")
     corpus = []
     for i in range(0, 1):
             
         a,b = 'áéíóúü','aeiouu'
         trans = str.maketrans(a,b)
 
-        #text = dataset['abstract1'][i].translate(trans)  
         text= valor.translate(trans) 
-    # texti= "psychometric property almost perfect scale individual difference http j lindif schuler p gifted adolescent journal gifted http jsge schwarz g estimating dimension model sciove s l application model criterion some problem in multivariate analysis psychometrika http shafran r cooper z fairburn c g clinical cognitive analysis http s"
-        #text= texti 
-
         #Remove references 
         text = re.sub(r"\([^()]*\)", "", text)
         
@@ -84,7 +60,7 @@ def preprocesamiento(valor,stop_words):
         #Lemmatisation
         lem = WordNetLemmatizer()
         text = [lem.lemmatize(word) for word in text if not word in  
-                stop_words and d.check(word) == False] 
+                stop_words ] 
         text = " ".join(text)
         corpus.append(text)
     return corpus
@@ -208,7 +184,7 @@ def keywords_extract(doc,tf_idf_vector,feature_names):
 
 
 def limpiar_keywords(keywords_excel,stop_words):
-    keywords_excel=keywords_excel[12:-4]
+    #keywords_excel=keywords_excel[12:-4]
     keywords_excel = keywords_excel.lower()
     a,b = 'áéíóúü','aeiouu'
     trans = str.maketrans(a,b)
@@ -340,40 +316,37 @@ def comparativa_estudiante(keywords_finales,respuesta):
     return list(keywords_finales.keys()),list(keywords_finales2.keys()),errores
 
 #---------------------------------------------------------------------------------
-def evaluar(indice):
-    scope = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
-    ]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("PRUEBA-PYTHON-22fd0afc8b92.json", scope)
-    client=gspread.authorize(creds)
-    sheet= client.open("corpus-articulos-divididos").worksheet('DAR')
-    valor=str(sheet.cell(indice,8))
-    keywords_excel=str(sheet.cell(indice,9))
+
+def get_data():
+    _route = 'https://docs.google.com/spreadsheets/d/'
+    _sheet_id='1w6Lr3cO7rQ8G-D9DpIgIzf4DC28eDbtuy8c_y-zgyRU'
+    _sheet_name='DAR'
+
+    url=f'https://docs.google.com/spreadsheet/ccc?key={_sheet_id}&output=xlsx'
+    df = pd.read_excel(url,sheet_name=_sheet_name)
+
+    _keywords = df.palabras_clave
+    _full_article = df.articulo_sin_referencias_limpio
+    _pdfs= df.url
+    print(_keywords,_full_article,_pdfs)
+    return _keywords,_full_article,_pdfs
+
+
+def evaluar(indice,_keywords,_full_article):
     stop_words=STOPWORDS()
-    corpus=preprocesamiento(valor,stop_words)
-    #wordcloud(stop_words,corpus)# aqui nube de palabras
+    corpus=preprocesamiento(_full_article[indice],stop_words)
     top_df=MONOGRAMA(corpus)
     top2_df=BIGRAMA(corpus)
     top3_df=TRIGRAMA(corpus)
     doc,tf_idf_vector,feature_names=VECTOR_TF_IFD(stop_words,corpus)
     keywords=keywords_extract(doc,tf_idf_vector,feature_names)
-    keywords_excel=limpiar_keywords(keywords_excel,stop_words)
+    keywords_excel=limpiar_keywords(_keywords[indice],stop_words)
     keywords_algorithm=integracion(keywords,top_df,top2_df,top3_df)
     keywords_finales=comparativa_articulo(keywords_algorithm,keywords_excel)
     return keywords_finales
-    #comparativa_estudiante(keywords_finales)
 
-def buscarNombre(indice):
-    scope = [
-    'https://www.googleapis.com/auth/spreadsheets',
-    'https://www.googleapis.com/auth/drive'
-    ]
-    creds = ServiceAccountCredentials.from_json_keyfile_name("PRUEBA-PYTHON-22fd0afc8b92.json", scope)
-    client=gspread.authorize(creds)
-    sheet= client.open("corpus-articulos-divididos").worksheet('DAR')
-    nombre_articulo=str(sheet.cell(indice,10))
-    nombre_articulo=nombre_articulo[13:-2]
+def buscarNombre(indice,_pdfs):
+    nombre_articulo=_pdfs[indice]
     return nombre_articulo
 
 #def nube(stop_words,corpus):
@@ -390,6 +363,3 @@ def buscarNombre(indice):
 #    plt.axis('off')
 #    #plt.show()
 #    fig.savefig("word1.png", dpi=900)
-
-    
-
