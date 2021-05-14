@@ -1,6 +1,6 @@
 import pyrebase
 from flask import Flask,render_template,request
-from nivel1 import getRandom, nivel_1_resultados, nivel_2_resultados, divideArrays, getDiference, gettingData
+from nivel1 import getRandom, nivel_1_resultados, nivel_2_resultados, divideArrays, getDiference, gettingData, getPuntaje
 #from keywords_difficult_level import evaluar,comparativa_estudiante
 
 config = {
@@ -50,18 +50,31 @@ def create_account():
 def index():
     return render_template('inicio.html')
 
-@app.route('/basico')
+@app.route('/basico', methods=["GET","POST"])
 def basico():
-    
+    puntaje = 0
+    try:
+        if request.method == "POST":
+            puntaje_actual = request.form["puntaje_actual"]
+            puntaje = puntaje_actual
+    except:
+        puntaje = 0
     rand_number = getRandom(size)
     titulo = _titles[rand_number]
-    return render_template('basico.html',titulo=titulo, rand_number=rand_number)
+    return render_template('basico.html',titulo=titulo, rand_number=rand_number, puntaje=puntaje, puntaje_actual=puntaje)
 
-@app.route('/intermedio')
+@app.route('/intermedio' , methods=["GET","POST"])
 def intermedio():
+    puntaje = 0
+    try:
+        if request.method == "POST":
+            puntaje_actual = request.form["puntaje_actual"]
+            puntaje = puntaje_actual
+    except:
+        puntaje = 0
     rand_number = getRandom(size)
     resumen = _summaries[rand_number]
-    return render_template('intermedio.html', resumen=resumen, rand_number=rand_number)
+    return render_template('intermedio.html', resumen=resumen, rand_number=rand_number, puntaje=puntaje, puntaje_actual=puntaje)
 
 @app.route('/avanzado')
 def avanzado():
@@ -84,9 +97,11 @@ def resultado():
         pc07 = request.form["pc07"]
         pc08 = request.form["pc08"]
         rand_number = request.form["rand_number"]
+        puntaje_actual = request.form["puntaje_actual"]
+
 
     arr_usuario=[pc01,pc02,pc03,pc04,pc05,pc06,pc07,pc08]
-
+   
     _title, _summary, _keyword, _full_article = _titles[int(rand_number)], _summaries[int(rand_number)], _keywords[int(rand_number)], _full_articles[int(rand_number)]
     matching_user_original, matching_user_prediction, matching_original_prediction = nivel_1_resultados(_title, _summary, arr_usuario)
    
@@ -103,7 +118,10 @@ def resultado():
     arr1, arr2 = divideArrays(matching_user_original)
     list4 = ["Esta parte aun se esta diseñando"] # posibles 
    
-    return render_template('resultado.html',list1 = list1,list2=list2,list3=list3,list4=list4)
+    puntaje_obtenido = getPuntaje(list2,list3)
+    puntaje_actual = int(puntaje_actual) + puntaje_obtenido
+    
+    return render_template('resultado.html',list1 = list1,list2=list2,list3=list3,list4=list4, puntaje_obtenido=puntaje_obtenido, puntaje_actual=puntaje_actual)
 
 @app.route('/resultado3', methods=["GET","POST"])
 def resultado3():
@@ -117,6 +135,7 @@ def resultado3():
         pc07 = request.form["pc07"]
         pc08 = request.form["pc08"]
         rand_number = request.form["rand_number"]
+        puntaje_actual = request.form["puntaje_actual"]
 
     arr_usuario=[pc01,pc02,pc03,pc04,pc05,pc06,pc07,pc08]
 
@@ -136,7 +155,10 @@ def resultado3():
     arr1, arr2 = divideArrays(matching_user_original)
     list4 = _keyword.split(",") # palabras clave del autor
    
-    return render_template('resultado3.html',list1 = list1,list2=list2,list3=list3,list4=list4)
+    puntaje_obtenido = getPuntaje(list2,list3)
+    puntaje_actual = int(puntaje_actual) + puntaje_obtenido
+
+    return render_template('resultado3.html',list1 = list1,list2=list2,list3=list3,list4=list4, puntaje_obtenido=puntaje_obtenido, puntaje_actual=puntaje_actual)
 
 @app.route('/resultado2', methods=["GET","POST"])
 def resultado2():
