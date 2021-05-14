@@ -12,6 +12,7 @@
   <body>
     <div class="container-md" style="margin-left: 4%;margin-right: 4%; text-align: center;">
       <h3> Resultados </h3>
+      <h4> Puntaje obtenido: {{puntaje_obtenido}}</h4>
     </div>
 
     <div style="margin: 4%;">
@@ -73,9 +74,15 @@
           </div>      
         </div>
         -->
-    </div>
-    <a href="{{ url_for('basico') }}" > <button type="button" class="btn btn-primary btn-lg" style="margin-top: 3%;">Siguiente</button> </a>
-    
+     </div>
+
+      <form class="row g-3 needs-validation" action="{{ url_for('basico') }}" method="POST" id="form">
+        <input type="hidden" id="puntaje_actual" name="puntaje_actual" value="{{puntaje_actual}}">
+        <div class="mb">
+          <button class="btn btn-primary" type="submit">Siguiente</button>
+        </div>
+      </form>
+      
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

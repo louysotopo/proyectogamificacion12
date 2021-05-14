@@ -15,14 +15,19 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-10">
+			<div class="col-8">
 				<div class="container-md">
-					<h3> Seleccione las Palabras Clave del siguiente titulo </h3>
+					<h3> Seleccione las palabras clave del siguiente título </h3>
 				</div>
 			</div>
 			<div class="col-2">
 				<div class="circulo">
 					<h2 style="text-align: center;padding: 30px"> 90 </h2>
+				</div>
+			</div>
+			<div class="col-2">
+				<div class="container-md">
+					<h3 style="text-align: center;"> Puntaje: {{puntaje}} </h3>
 				</div>
 			</div>
 			<div class="row">
@@ -73,6 +78,7 @@
 							    <button class="btn btn-primary" type="submit">Enviar</button>
 							</div>
 							<input type="hidden" id="rand_number" name="rand_number" value="{{rand_number}}">
+							<input type="hidden" id="puntaje_actual" name="puntaje_actual" value="{{puntaje_actual}}">
 						</form>
 					</div>
 				</div>

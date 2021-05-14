@@ -199,3 +199,21 @@ def equal_string(str1, str2):
     if str1 == str2:
         return True
     return False
+
+def getPuntaje(arr_usuario_correctas, arr_usuario_incorrectas):
+  positivo=0
+  negativo=0
+  for item in arr_usuario_correctas:
+    if item == "" or item == " ":
+      pass
+    else:
+      positivo += 1
+  
+  for item in arr_usuario_incorrectas:
+    if item == "" or item == " ":
+      pass
+    else:
+      negativo += 1
+
+  return positivo-negativo
+
