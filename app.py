@@ -1,5 +1,5 @@
 import pyrebase
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,session,escape
 from nivel1 import getRandom, nivel_1_resultados, nivel_2_resultados, divideArrays, getDiference, gettingData, getPuntaje
 #from keywords_difficult_level import evaluar,comparativa_estudiante
 
@@ -11,20 +11,39 @@ config = {
     "messagingSenderId": "783180904629",
     "appId": "1:783180904629:web:e747cd4ca127296f9b66fc",
     "measurementId": "G-17NVEBGH3M",
-    "databaseURL":""
+    "databaseURL":"https://gamip-e2a54-default-rtdb.firebaseio.com"
 }
 
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
+db = firebase.database()
 
 app = Flask(__name__)
 
 _titles, _summaries, _keywords, _full_articles, size = gettingData()
 rand_number = getRandom(size)
 
-@app.route('/login')
+@app.route('/', methods=['GET','POST'])
 def login():
-    return render_template('login.html')
+    mes = ""
+    if request.method == 'POST':
+        email = request.form['user_email']
+        pwd   = request.form['user_pwd']
+        try:
+            user = auth.sign_in_with_email_and_password(email,pwd)
+            user__ = auth.get_account_info(user['idToken'])
+            #print(user)
+            session["userid"] = user['localId']
+            session["email"] = user['email']
+            session["nivel1"] = "0"
+            session["nivel2"] = "0"
+            
+            return render_template('inicio.html',message=mes)
+        except:
+            mes = "Usuario o contraseña incorrecta"
+            return render_template('login.html',message=mes)
+
+    return render_template('login.html',message=mes)    
 
 @app.route('/create_account', methods=['GET','POST'])
 def create_account():
@@ -38,6 +57,11 @@ def create_account():
                 new_user = auth.create_user_with_email_and_password(email,password)
                 auth.send_email_verification(new_user['idToken'])
                 existing_account = "Revise su correo para la confirmacion"
+                session["userid"] = new_user['localId']
+                session["email"] = new_user['email']
+                session["nivel1"] = "0"
+                session["nivel2"] = "0"              
+
                 return render_template("create_account.html",message=existing_account)                
             except:
                 existing_account = "Este correo ya esta registrado"
@@ -46,7 +70,7 @@ def create_account():
     return render_template('create_account.html')
 
 
-@app.route('/')
+@app.route('/inicio')
 def index():
     return render_template('inicio.html')
 
@@ -98,6 +122,7 @@ def resultado():
         pc08 = request.form["pc08"]
         rand_number = request.form["rand_number"]
         puntaje_actual = request.form["puntaje_actual"]
+        #enviar_datos()
 
 
     arr_usuario=[pc01,pc02,pc03,pc04,pc05,pc06,pc07,pc08]
@@ -174,19 +199,33 @@ def resultado2():
         rand_number = request.form["rand_number"]
    
     arr_usuario=[pc01,pc02,pc03,pc04,pc05,pc06,pc07,pc08]
-    #diccionario_D = evaluar(rand_number,_keywords, _full_articles)
-    #res1,res2,res3 = comparativa_estudiante(diccionario_D,arr_usuario)   
-
-    #list1 = res1
-    #list2 = res2
-    #list3 = res3
     list1 = ["q","q"]
     list2 = ["q","q"]
     list3 = ["q","q"]
     list4 = ["q","q"]
-
-
     return render_template('resultado2.html',list1 = list1,list2=list2,list3=list3,list4=list4)
 
+@app.route("/logout")
+def logout():
+    session.pop("userid",None)
+    session.pop("email",None)
+    session.pop("nivel1",None)
+    session.pop("nivel2",None)
+    return "You are logged Out"
+
+@app.route("/enviar_datos")
+def enviar_datos():
+    if "userid" in session:
+        #print(session["userid"])
+        data = {"email": session["email"],"nivel1":session["nivel1"],"nivel2":session["nivel2"]}
+        db.child("students").child(session["userid"]).set(data)
+        #db.child("students").push({"aaaa":"aaaa"})
+        return "Your are loged"
+    return "You must log in first"
+
+    #db.child("students").update("a@unsa.edu.pe").push({"nombre":"juan alberto","nivel1":12,"nivel2":15})
+    #db.child("students").update({"name":"joshi"})
+
+app.secret_key = "12345"
 if __name__ == '__main__':
     app.run()
